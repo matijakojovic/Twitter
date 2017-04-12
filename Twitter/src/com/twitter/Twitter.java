@@ -4,15 +4,35 @@ import java.util.LinkedList;
 
 import com.twitter.poruke.TwitterPoruka;
 
+/**
+ * Klasa Twitter sadrzi listu svih poruka
+ * @author Matija Kojoviæ
+ * @version 1.0
+ *
+ */
+
 public class Twitter {
 
-	
+	/**
+	 * Atribut poruke predstavlja ulancanu listu objekata klase TwitterPoruka.
+	 */
 	private LinkedList<TwitterPoruka> poruke = new LinkedList<TwitterPoruka>();
 	
+	/**
+	 * Vraca listu svih poruka.	
+	 * 
+	 * @return LinkedList poruke - vraca sve poruke kao ulancanu listu 
+	 * @see com.twitter.poruke.TwitterPoruka
+	 */
 	public LinkedList<TwitterPoruka> vratiSvePoruke(){
 		return poruke;
 	}
-	
+	/**
+	 * Metoda unosi novog korisnika i njegovu poruku.
+	 * 
+	 * @param korisnik unosi se kao String.
+	 * @param poruka unosi se kao String.
+	 */
 	public void unesi(String korisnik, String poruka) {
 		//Pravi se nova poruka i puni podacima.
 		TwitterPoruka tp = new TwitterPoruka();
@@ -21,7 +41,20 @@ public class Twitter {
 		//Poruka se unosi u listu na kraj
 		poruke.addLast(tp);
 	}
-	
+	/**
+	 * Metoda vraca zeljeni broj objekata klase TwitterPoruka koji sadrze prosledjeni tag , kao niz.
+	 * 
+	 * @param maxBroj unosi se kao int i predstavlja maksimalni broj poruka koji moze biti vracen
+	 * @param tag unosi se kao String i predstvalja tag koji poruka treba da sadrzi
+	 * @throws java.lang.RuntimeException ako je tag:
+	 * 		<ul>
+	 * 		<li>null</li>
+	 * 		<li>prazan String</li>
+	 * 		</ul>
+	 * @return rezultat - niz poruka
+	 * 
+	 * 
+	 */
 	public TwitterPoruka[] vratiPoruke(int maxBroj, String tag) {
 		if (tag==null || tag.isEmpty()){
 			throw new RuntimeException("Morate uneti tag");
@@ -52,6 +85,3 @@ public class Twitter {
 		return rezultat;
 	}
 }
-	
-
-
