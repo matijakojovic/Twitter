@@ -69,7 +69,8 @@ public class TwitterPorukaTest {
 	
 	@Test (expected = java.lang.RuntimeException.class)
 	public void testSetPorukaEmptyString() {
-		t.setPoruka("");
+		String s = "";
+		t.setPoruka(s);
 	}
 	
 	@Test (expected = java.lang.RuntimeException.class)
@@ -90,6 +91,13 @@ public class TwitterPorukaTest {
 		t.setPoruka("Cao ja sam novi na twitteru");
 		
 		assertEquals("KORISNIK:"+t.getKorisnik()+" PORUKA:"+t.getPoruka(), t.toString());
+	}
+
+	@Test
+	public void testGetPoruka() {
+		t.setPoruka("Zdravo");
+		String a = t.getPoruka();
+		assertEquals("Zdravo", a);
 	}
 
 }
