@@ -19,7 +19,7 @@ import com.twitter.poruke.TwitterPoruka;
 public class TwitterTest {
 
 	private Twitter t;
-	
+	LinkedList<TwitterPoruka> lista;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -27,8 +27,8 @@ public class TwitterTest {
 	@Before
 	public void setUp() throws Exception {
 		t = new Twitter();
-		
-		for(int i = 0; i < 300; i++){
+		lista = new LinkedList<>();
+		/*for(int i = 0; i < 300; i++){
 			String korisnik = "User";
 			String poruka = "Poruka";
 			
@@ -36,7 +36,7 @@ public class TwitterTest {
 			poruka += i;
 			
 			t.unesi(korisnik, poruka);
-		}
+		}*/
 	}
 
 	/**
@@ -45,16 +45,8 @@ public class TwitterTest {
 	@After
 	public void tearDown() throws Exception {
 		t = null;
+		lista = null;
 	}
-
-	/**
-	 * Test method for {@link com.twitter.Twitter#vratiSvePoruke()}.
-	 */
-	@Test
-	public void testVratiSvePoruke() {
-		assertEquals(300, t.vratiSvePoruke().size());	
-	}
-	
 	/**
 	 * Test method for {@link com.twitter.Twitter#unesi(java.lang.String, java.lang.String)}.
 	 */
@@ -77,18 +69,43 @@ public class TwitterTest {
 		
 		LinkedList<TwitterPoruka> poruke = t.vratiSvePoruke();
 		
-		if (poruke.getLast().getKorisnik().equals("korisnik")) {
-			fail("Metoda treba da doda ime koje je dato kao parametar");
-			
-		}
+		assertFalse(poruke.getLast().getKorisnik().equals("korisnik"));			
+	}
+	
+	/**
+	 * Test method for {@link com.twitter.Twitter#vratiSvePoruke()}.
+	 */
+	@Test
+	public void testVratiSvePoruke() {
+		t.unesi("Pera", "Cao svima");
+		
+		assertEquals("Pera", t.vratiSvePoruke().getLast().getKorisnik());
+		assertEquals("Cao svima", t.vratiSvePoruke().getLast().getPoruka());
+	}
+	@Test
+	public void testVratiSvePoruke2() {
+		t.unesi("Pera", "Cao svima");
+		
+		assertEquals("Pera", t.vratiSvePoruke().getLast().getKorisnik());
+		assertEquals("Cao svima", t.vratiSvePoruke().getLast().getPoruka());
 	}
 	/**
 	 * Test method for {@link com.twitter.Twitter#vratiPoruke(int, java.lang.String)}.
 	 */
 	@Test
 	public void testVratiPoruke() {
-		assertEquals(15, t.vratiPoruke(15, "test").length);
-	}
+		t.unesi("Andrea", "zdravo");
+		t.unesi("Marija", "Cao");
+		
+		TwitterPoruka p1 = new TwitterPoruka();
+		p1.setKorisnik("Andrea");
+		p1.setPoruka("zdravo");		
+
+		TwitterPoruka[] niz = t.vratiPoruke(1, "zdr");
+		String s = niz[0].toString();
+		
+		assertEquals(p1.toString(), s);
+	}		
 	@Test (expected = java.lang.RuntimeException.class)
 	public void testVratiPorukeNull() {
 		t.vratiPoruke(1, null);
@@ -97,11 +114,6 @@ public class TwitterTest {
 	@Test (expected = java.lang.RuntimeException.class)
 	public void testVratiPorukeEmptyString() {
 		t.vratiPoruke(1, "");
-	}
-
-	@Test 
-	public void testVratiPorukeMaxBroj() {
-		assertEquals(100, t.vratiPoruke(-23, "test").length);
 	}
 }
 
