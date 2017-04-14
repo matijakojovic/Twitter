@@ -28,15 +28,6 @@ public class TwitterTest {
 	public void setUp() throws Exception {
 		t = new Twitter();
 		lista = new LinkedList<>();
-		/*for(int i = 0; i < 300; i++){
-			String korisnik = "User";
-			String poruka = "Poruka";
-			
-			korisnik += i;
-			poruka += i;
-			
-			t.unesi(korisnik, poruka);
-		}*/
 	}
 
 	/**
@@ -115,6 +106,10 @@ public class TwitterTest {
 	public void testVratiPorukeEmptyString() {
 		t.vratiPoruke(1, "");
 	}
+	@Test 
+	 public void testVratiPorukeMaxBroj() {
+	 	assertEquals(100, t.vratiPoruke(-23, "nesto, ionako nema poruka").length);
+	 }
 }
 
 
